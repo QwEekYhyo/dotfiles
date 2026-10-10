@@ -63,6 +63,33 @@ vim.keymap.set("n", "[d", function()
   vim.diagnostic.jump({ count = -1, float = true })
 end)
 
+-- Enable terminal transparency
+local function set_transparent_background()
+  local groups = {
+    "Normal",
+    "NormalNC",
+    "NormalFloat",
+    "FloatBorder",
+    "NonText",
+    "SignColumn",
+    "EndOfBuffer",
+    "MsgArea",
+  }
+
+  for _, group in ipairs(groups) do
+    vim.api.nvim_set_hl(0, group, {
+      bg = "NONE",
+      ctermbg = "NONE",
+    })
+  end
+end
+
+set_transparent_background()
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = set_transparent_background,
+})
+
 -- -- ── LSP ──────────────────────────────────────────────────────
 -- local lsp_on_attach = function(_, bufnr)
 --   local bmap = function(mode, lhs, rhs, desc)
